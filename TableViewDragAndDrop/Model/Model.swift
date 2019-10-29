@@ -10,15 +10,15 @@ import Foundation
 /// The data model used to populate the table view on app launch.
 struct Model {
     private(set) var placeNames = [
-        "Adler Planetarium",
-        "Art Institute of Chicago",
-        "Field Museum of Natural History",
-        "Lincoln Park Zoo",
-        "Millennium Park",
-        "Museum of Science and Industry",
-        "Navy Pier",
-        "Shedd Aquarium",
-        "Wrigley Field"
+        "Yosemite",
+        "Yellowstone",
+        "Theodore Roosevelt",
+        "Sequoia",
+        "Pinnacles",
+        "Mount Rainier",
+        "Mammoth Cave",
+        "Great Basin",
+        "Grand Canyon"
     ]
     
     /// The traditional method for rearranging rows in a table view.

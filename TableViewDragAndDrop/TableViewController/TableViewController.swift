@@ -18,6 +18,7 @@ class TableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.dragInteractionEnabled = true // Enable intra-app drags for iPhone.
         tableView.dragDelegate = self
         tableView.dropDelegate = self
     }

@@ -21,6 +21,7 @@ To enable dragging, dropping, or both, specify a table view as its own drag or d
 override func viewDidLoad() {
     super.viewDidLoad()
     
+    tableView.dragInteractionEnabled = true // Enable intra-app drags for iPhone.
     tableView.dragDelegate = self
     tableView.dropDelegate = self
 }
