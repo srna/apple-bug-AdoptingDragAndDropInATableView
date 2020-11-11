@@ -25,16 +25,22 @@ extension TableViewController: UITableViewDropDelegate {
          custom view does includes only a drop operation, not an intent.)
     */
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
-        // The .move operation is available only for dragging within a single app.
+        var dropProposal = UITableViewDropProposal(operation: .cancel)
+        
+        // Accept only one drag item.
+        guard session.items.count == 1 else { return dropProposal }
+        
+        // The .move drag operation is available only for dragging within this app and while in edit mode.
         if tableView.hasActiveDrag {
-            if session.items.count > 1 {
-                return UITableViewDropProposal(operation: .cancel)
-            } else {
-                return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+            if tableView.isEditing {
+                dropProposal = UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
             }
         } else {
-            return UITableViewDropProposal(operation: .copy, intent: .insertAtDestinationIndexPath)
+            // Drag is coming from outside the app.
+            dropProposal = UITableViewDropProposal(operation: .copy, intent: .insertAtDestinationIndexPath)
         }
+
+        return dropProposal
     }
     
     /**

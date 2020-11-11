@@ -10,7 +10,7 @@ To enable drag and drop, you specify the table view as its own drag delegate and
 Adopting drag and drop in a table view differs in some important ways compared to the process you follow for a custom view. To compare the steps, see [Adopting Drag and Drop in a Custom View](https://developer.apple.com/documentation/uikit/drag_and_drop/adopting_drag_and_drop_in_a_custom_view).
 
 ## Get Started
-Deploy this project on iPad, which supports drag and drop between apps. When you first launch this project’s built app, you see a table with several rows, each with a text string. Use this app along with a second app that supports editing of text strings, such as Reminders. For example, configure the iPad screen to Split View, with this app side by side with Reminders. Then drag a row from this app into Reminders, or drag a reminder into this app.
+Deploy this project on iPad, which supports drag and drop between apps. When you first launch this project’s built app, you see a table with several rows, each with a text string. Use this app along with a second app that supports editing of text strings, such as Notes or Reminders. For example, configure the iPad screen to Split View, with this app side by side with Reminders. Then drag a row from this app into Reminders, or drag a reminder into this app.
 
 This app also supports rearranging rows in the table by dragging a row up or down. However, rearrangement in this app uses the traditional [`tableView(canMoveRowAt:)`](https://developer.apple.com/documentation/uikit/uitableviewdatasource/1614927-tableview) and [`tableView(moveRowAt:to:)`](https://developer.apple.com/documentation/uikit/uitableviewdatasource/1614867-tableview) methods rather than the drag and drop API.
 
@@ -24,6 +24,8 @@ override func viewDidLoad() {
     tableView.dragInteractionEnabled = true // Enable intra-app drags for iPhone.
     tableView.dragDelegate = self
     tableView.dropDelegate = self
+
+    navigationItem.rightBarButtonItem = editButtonItem
 }
 ```
 
@@ -81,16 +83,22 @@ Second, you must tell the system how you want to consume the data, which is typi
 
 ``` swift
 func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
-    // The .move operation is available only for dragging within a single app.
+    var dropProposal = UITableViewDropProposal(operation: .cancel)
+    
+    // Accept only one drag item.
+    guard session.items.count == 1 else { return dropProposal }
+    
+    // The .move drag operation is available only for dragging within this app and while in edit mode.
     if tableView.hasActiveDrag {
-        if session.items.count > 1 {
-            return UITableViewDropProposal(operation: .cancel)
-        } else {
-            return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+        if tableView.isEditing {
+            dropProposal = UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
         }
     } else {
-        return UITableViewDropProposal(operation: .copy, intent: .insertAtDestinationIndexPath)
+        // Drag is coming from outside the app.
+        dropProposal = UITableViewDropProposal(operation: .copy, intent: .insertAtDestinationIndexPath)
     }
+
+    return dropProposal
 }
 ```
 

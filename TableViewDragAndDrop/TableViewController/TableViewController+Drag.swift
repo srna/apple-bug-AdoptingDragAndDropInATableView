@@ -17,4 +17,12 @@ extension TableViewController: UITableViewDragDelegate {
     func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         return model.dragItems(for: indexPath)
     }
+    
+    func tableView(_ tableView: UITableView, dragSessionWillBegin session: UIDragSession) {
+        navigationItem.rightBarButtonItem?.isEnabled = false
+    }
+    
+    func tableView(_ tableView: UITableView, dragSessionDidEnd session: UIDragSession) {
+        navigationItem.rightBarButtonItem?.isEnabled = true
+    }
 }

@@ -21,5 +21,7 @@ class TableViewController: UITableViewController {
         tableView.dragInteractionEnabled = true // Enable intra-app drags for iPhone.
         tableView.dragDelegate = self
         tableView.dropDelegate = self
+
+        navigationItem.rightBarButtonItem = editButtonItem
     }
 }
