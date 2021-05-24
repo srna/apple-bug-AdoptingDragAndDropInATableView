@@ -9,7 +9,7 @@ To enable drag and drop, you specify the table view as its own drag delegate and
 
 Adopting drag and drop in a table view differs in some important ways compared to the process you follow for a custom view. To compare the steps, see [Adopting Drag and Drop in a Custom View](https://developer.apple.com/documentation/uikit/drag_and_drop/adopting_drag_and_drop_in_a_custom_view).
 
-## Get Started
+## Drag Text in the Sample App
 Deploy this project on iPad, which supports drag and drop between apps. When you first launch this project’s built app, you see a table with several rows, each with a text string. Use this app along with a second app that supports editing of text strings, such as Notes or Reminders. For example, configure the iPad screen to Split View, with this app side by side with Reminders. Then drag a row from this app into Reminders, or drag a reminder into this app.
 
 This app also supports rearranging rows in the table by dragging a row up or down. However, rearrangement in this app uses the traditional [`tableView(canMoveRowAt:)`](https://developer.apple.com/documentation/uikit/uitableviewdatasource/1614927-tableview) and [`tableView(moveRowAt:to:)`](https://developer.apple.com/documentation/uikit/uitableviewdatasource/1614867-tableview) methods rather than the drag and drop API.
@@ -21,7 +21,7 @@ To enable dragging, dropping, or both, specify a table view as its own drag or d
 override func viewDidLoad() {
     super.viewDidLoad()
     
-    tableView.dragInteractionEnabled = true // Enable intra-app drags for iPhone.
+    tableView.dragInteractionEnabled = true
     tableView.dragDelegate = self
     tableView.dropDelegate = self
 
