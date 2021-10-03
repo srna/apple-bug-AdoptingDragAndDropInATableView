@@ -32,9 +32,7 @@ extension TableViewController: UITableViewDropDelegate {
         
         // The .move drag operation is available only for dragging within this app and while in edit mode.
         if tableView.hasActiveDrag {
-            if tableView.isEditing {
-                dropProposal = UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
-            }
+            dropProposal = UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
         } else {
             // Drag is coming from outside the app.
             dropProposal = UITableViewDropProposal(operation: .copy, intent: .insertAtDestinationIndexPath)
